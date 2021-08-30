@@ -2,7 +2,6 @@
 # encoding: utf-8
 """
 weatherServer
-
 Created by Mattia Mascarello on 21/05/21.
 MIT License
 """
