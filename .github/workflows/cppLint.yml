@@ -1,4 +1,4 @@
-name: lint
+name: Arduino Linter
 
 on:
   push:
