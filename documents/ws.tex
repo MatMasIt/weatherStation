@@ -45,15 +45,17 @@ Il raspberry è dotato di un programma in python (v 3.8) che ottiene i dati di q
 Questi dati, aggregati a quelli forniti dal SenseHat sono salvati nella memoria interna, mostrati sulla matrice led e accodati al caricamento sul server.
 \subsection{I sensori}
 Alla scheda \emph{Arduino} troviamo collegati 3 sensori:
-\begin{center}
+\begin{figure}[h!]
+\centering
 \includegraphics[]{FC22.png}\\
 \caption{\emph{FC22}}
-\end{center}
+\end{figure}
 \emph{FC22}: Il sensore \emph{FC22} è responsabile della raccolta dati relativa a fumo e vapori infiammabili (ovviamente presenti nell’aria). Il risultato mostrato è espresso in ppm ovvero parti per milione: microgrammi (di una determinata sostanza) su metro cubo ($\frac{\mu g}{m^3}$).
-\begin{center}
+\begin{figure}[h!]
+\centering
 \includegraphics[]{sds011.jpg}\\
 \caption{\emph{SDS011}}
-\end{center}
+\end{figure}
 \emph{SDS011}: Per ultimo abbiamo il rilevatore di polveri sottili, che ci restituisce il risultato sempre in microgrammi su metro cubo.\\
 Il valore del PM2,5 indica la quantità di particelle con un diametro di 2,5 micron mentre PM10 ci indica la quantità di particelle con un diametro di 10 micron.
 \section{Il sito}
