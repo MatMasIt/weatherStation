@@ -3,7 +3,7 @@ name: Arduino Linter
 on:
   push:
     paths:
-      - 'arduino/*'
+      - 'arduino/*.ino'
 jobs:
   clang-tidy:
     name: clang-tidy
