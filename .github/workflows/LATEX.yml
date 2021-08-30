@@ -13,6 +13,7 @@ jobs:
         uses: xu-cheng/latex-action@v2
         with:
          root_file: 'documents/ws.tex'
+         post_compile: "mv ws.pdf documents/ws.pdf"
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
