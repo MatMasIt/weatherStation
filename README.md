@@ -3,4 +3,6 @@
 
 [![Pylint](https://github.com/MatMasIt/weatherStation/actions/workflows/pylint.yml/badge.svg)](https://github.com/MatMasIt/weatherStation/actions/workflows/pylint.yml)
 
-Cocito weather station
+Source Code for the weather station situated at [Liceo Cocito](https://liceococito.edu.it): station and server code
+
+2021, Mattia Mascarello, Lorenzo Dellapiana, Luca Biello, The MIT License
