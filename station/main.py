@@ -1,4 +1,4 @@
-# 2021, Mattia Mascarello, The MIT License
+# 2021, Mattia Mascarello, The MIT License 
 from gpiozero import CPUTemperature
 import serial
 import weatherServer
