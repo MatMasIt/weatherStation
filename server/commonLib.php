@@ -111,6 +111,7 @@ function get_stats($data){
         $max=max($max,$e["value"]);
         $min=min($min,$e["value"]);
     }
+    if($avgNum==0) return ["avg"=>0,"max"=>0,"min"=>0,"stdev"=>0,"setSize"=>0]; 
     return ["avg"=>$avgTot/$avgNum,"max"=>$max,"min"=>$min,"stdev"=>stats_standard_deviation($allData),"setSize"=>$avgNum];
 }
 function filterList($data,$filter){
