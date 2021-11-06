@@ -1,7 +1,5 @@
 import org.ini4j.Ini;
-
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +10,7 @@ public class Window extends JFrame {
     private JMenuItem datetime,connection, flipTime;
     private JStatusTicker jc;
     private JPanel currentGauges,maintenance;
-    private JPanel gaugesOne,gaugesTwo,chartOne,chartTwo;
+    private JPanel gaugesOne,gaugesTwo,gaugesThree,chartOne,chartTwo,chartThree;
     private xyChart temperaturexy,humidityxy,pressurexy,pm10xy,pm25xy,sxy;
     private final ImageIcon maintIcon;
     private  JLabel maintIconLabel;
@@ -36,6 +34,16 @@ public class Window extends JFrame {
 
     private JLabel GraphsHeaderOne;
     private JLabel GraphsHeaderTwo;
+
+    public JLabel getGraphsHeaderThree() {
+        return GraphsHeaderThree;
+    }
+
+    public void setGraphsHeaderThree(JLabel graphsHeaderThree) {
+        GraphsHeaderThree = graphsHeaderThree;
+    }
+
+    private JLabel GraphsHeaderThree;
     private final TemperatureDial te;
     private final HumidityDial h;
     private final PressureDial p;
@@ -127,62 +135,77 @@ public class Window extends JFrame {
         g.gridheight=1;
         h=  new HumidityDial("Umidità","%",10);
         gaugesOne.add(h,g);
+
+        gaugesTwo= new JPanel();
+        gaugesTwo.setLayout(new GridBagLayout());
+
         g= new GridBagConstraints();
         g.gridx=0;
-        g.gridy=1;
+        g.gridy=0;
         g.gridwidth=1;
         g.gridheight=1;
         p = new PressureDial("Pressione","hPa",1080);
-        gaugesOne.add(p,g);
+        gaugesTwo.add(p,g);
         g= new GridBagConstraints();
         g.gridx=1;
-        g.gridy=1;
+        g.gridy=0;
         g.gridwidth=1;
         g.gridheight=1;
         pm10 = new PM10Dial("PM10","µg/m³",10);
-        gaugesOne.add(pm10,g);
+        gaugesTwo.add(pm10,g);
         g.gridx=0;
         g.gridy=2;
         g.gridwidth=2;
         g.gridheight=1;
-        JLabel pageOne=new JLabel("Pagina 1 di 4",JLabel.CENTER);
+        JLabel pageOne=new JLabel(/*"Pagina 1 di 6"*/"",JLabel.CENTER);
+        JLabel pageTwo=new JLabel(/*"Pagina 2 di 6"*/"",JLabel.CENTER);
         pageOne.setFont(new Font("Serif", Font.PLAIN, 30));
+        pageTwo.setFont(new Font("Serif", Font.PLAIN, 30));
 
         gaugesOne.add(pageOne,g);
-        gaugesTwo= new JPanel();
+        gaugesTwo.add(pageTwo,g);
 
-        gaugesTwo.setLayout(new GridBagLayout());
+        gaugesThree= new JPanel();
+        gaugesThree.setLayout(new GridBagLayout());
         g= new GridBagConstraints();
         g.gridx=0;
         g.gridy=0;
         g.gridwidth=1;
         g.gridheight=1;
         pm25=  new PM25Dial("PM2.5","µg/m³",10);
-        gaugesTwo.add(pm25,g); g= new GridBagConstraints();
+        gaugesThree.add(pm25,g); g= new GridBagConstraints();
         s=  new PM25Dial("Fumo e vapori infiammabili","µg/m³",10);
-        gaugesTwo.add(s,g);
-        g.gridx=0;
-        g.gridy=2;
-        g.gridwidth=2;
+        gaugesThree.add(s,g);
+        g.gridx=1;
+        g.gridy=0;
+        g.gridwidth=1;
         g.gridheight=1;
-        JLabel pageTwo=new JLabel("Pagina 2 di 4",JLabel.CENTER);
-        pageTwo.setFont(new Font("Serif", Font.PLAIN, 30));
+        JLabel pageThree=new JLabel(/*"Pagina 3 di 6"*/"",JLabel.CENTER);
+        pageThree.setFont(new Font("Serif", Font.PLAIN, 30));
+        gaugesThree.setFont(new Font("Serif", Font.PLAIN, 30));
 
         g= new GridBagConstraints();
         g.gridx=0;
         g.gridy=2;
         g.gridwidth=4;
-        gaugesTwo.add(pageTwo,g);
+        gaugesThree.add(pageThree,g);
         currentGauges.add(gaugesOne);
         currentGauges.add(gaugesTwo);
+        currentGauges.add(gaugesThree);
 
         chartOne = new JPanel();
         chartTwo= new JPanel();
+        chartThree = new JPanel();
         chartOne.setLayout(new GridBagLayout());
         chartTwo.setLayout(new GridBagLayout());
+        chartThree.setLayout(new GridBagLayout());
         g= new GridBagConstraints();
         GraphsHeaderOne=new JLabel("Dati giornalieri",JLabel.CENTER);
         GraphsHeaderOne.setFont(new Font("Serif", Font.PLAIN, 30));
+        GraphsHeaderTwo=new JLabel("Dati giornalieri",JLabel.CENTER);
+        GraphsHeaderTwo.setFont(new Font("Serif", Font.PLAIN, 30));
+        GraphsHeaderThree=new JLabel("Dati giornalieri",JLabel.CENTER);
+        GraphsHeaderThree.setFont(new Font("Serif", Font.PLAIN, 30));
         g.gridx=0;
         g.gridy=0;
         g.gridwidth=2;
@@ -198,50 +221,58 @@ public class Window extends JFrame {
         g.gridy=1;
         g.gridwidth=1;
         chartOne.add(humidityxy,g);
+        g.gridx=0;
+        g.gridy=0;
+        g.gridwidth=2;
+        g.gridheight=1;
+        chartTwo.add(GraphsHeaderTwo);
         pressurexy= new xyChart("Pressione","Data","hPa","Pressione", Color.green, DataType.PRESSURE);
         g.gridx=0;
-        g.gridy=2;
+        g.gridy=1;
         g.gridwidth=1;
-        chartOne.add(pressurexy,g);
+        chartTwo.add(pressurexy,g);
         pm10xy= new xyChart("PM10","Data","µg/m³","PM10", Color.cyan, DataType.PM10);
         g.gridx=1;
-        g.gridy=2;
+        g.gridy=1;
         g.gridwidth=1;
-        chartOne.add(pm10xy,g);
+        chartTwo.add(pm10xy,g);
         pm25xy= new xyChart("PM2.5","Data","µg/m³","PM2.5", Color.magenta, DataType.PM25);
 
         g.gridx=0;
         g.gridy=3;
         g.gridwidth=2;
         g.gridheight=1;
-        JLabel pageThree=new JLabel("Pagina 3 di 4",JLabel.CENTER);
-        pageThree.setFont(new Font("Serif", Font.PLAIN, 30));
-        chartOne.add(pageThree,g);
-        GraphsHeaderTwo=new JLabel("Dati giornalieri",JLabel.CENTER);
-        GraphsHeaderTwo.setFont(new Font("Serif", Font.PLAIN, 30));
+        JLabel pageFour=new JLabel(/*"Pagina 4 di 6"*/"",JLabel.CENTER);
+        pageFour.setFont(new Font("Serif", Font.PLAIN, 30));
+        JLabel pageFive=new JLabel(/*"Pagina 5 di 6"*/"",JLabel.CENTER);
+        pageFive.setFont(new Font("Serif", Font.PLAIN, 30));
+        chartOne.add(pageFour,g);
+        chartTwo.add(pageFive,g);
+
         g.gridx=0;
         g.gridy=0;
         g.gridwidth=2;
         g.gridheight=1;
-        chartTwo.add(GraphsHeaderTwo,g);
+        chartThree.add(GraphsHeaderThree,g);
         g.gridx=0;
         g.gridy=1;
         g.gridwidth=1;
-        chartTwo.add(pm25xy,g);
+        chartThree.add(pm25xy,g);
         sxy= new xyChart("Fumo","Data","µg/m³","PM2.5", Color.orange, DataType.SMOKE);
         g.gridx=0;
         g.gridy=2;
         g.gridwidth=1;
-        chartTwo.add(sxy,g);
+        chartThree.add(sxy,g);
         g.gridx=0;
         g.gridy=3;
         g.gridwidth=2;
         g.gridheight=1;
-        JLabel pageFour=new JLabel("Pagina 4 di 4",JLabel.CENTER);
-        pageFour.setFont(new Font("Serif", Font.PLAIN, 30));
-        chartTwo.add(pageFour,g);
+        JLabel pageSix=new JLabel(/*"Pagina 6 di 6"*/"",JLabel.CENTER);
+        pageSix.setFont(new Font("Serif", Font.PLAIN, 30));
+        chartThree.add(pageSix,g);
         currentGauges.add(chartOne);
         currentGauges.add(chartTwo);
+        currentGauges.add(chartThree);
         this.add(currentGauges);
         this.setView(View.MAIN_GAUGES);
         this.setGaugesPage(1);
@@ -328,31 +359,55 @@ public class Window extends JFrame {
      * @param page
      */
     public void setGaugesPage(int page) {
-        if (page > 4) page = 1;
+        if (page > 6) page = 1;
         switch (page) {
             case 1 -> {
                 gaugesOne.setVisible(true);
                 gaugesTwo.setVisible(false);
+                gaugesThree.setVisible(false);
                 chartOne.setVisible(false);
                 chartTwo.setVisible(false);
+                chartThree.setVisible(false);
             }
             case 2 -> {
                 gaugesOne.setVisible(false);
                 gaugesTwo.setVisible(true);
+                gaugesThree.setVisible(false);
                 chartOne.setVisible(false);
                 chartTwo.setVisible(false);
+                chartThree.setVisible(false);
             }
             case 3 -> {
                 gaugesOne.setVisible(false);
                 gaugesTwo.setVisible(false);
-                chartOne.setVisible(true);
+                gaugesThree.setVisible(true);
+                chartOne.setVisible(false);
                 chartTwo.setVisible(false);
+                chartThree.setVisible(false);
             }
             case 4 -> {
                 gaugesOne.setVisible(false);
                 gaugesTwo.setVisible(false);
+                gaugesThree.setVisible(false);
+                chartOne.setVisible(true);
+                chartTwo.setVisible(false);
+                chartThree.setVisible(false);
+            }
+            case 5 -> {
+                gaugesOne.setVisible(false);
+                gaugesTwo.setVisible(false);
+                gaugesThree.setVisible(false);
                 chartOne.setVisible(false);
                 chartTwo.setVisible(true);
+                chartThree.setVisible(false);
+            }
+            case 6 -> {
+                gaugesOne.setVisible(false);
+                gaugesTwo.setVisible(false);
+                gaugesThree.setVisible(false);
+                chartOne.setVisible(false);
+                chartTwo.setVisible(false);
+                chartThree.setVisible(true);
             }
         }
     }
@@ -392,8 +447,10 @@ public class Window extends JFrame {
     public int getGaugesPage(){
         if(gaugesOne.isVisible()) return 1;
         else if (gaugesTwo.isVisible()) return 2;
-        else if (chartOne.isVisible()) return 3;
-        else return 4;
+        else if (gaugesThree.isVisible()) return 3;
+        else if (chartOne.isVisible()) return 4;
+        else if (chartTwo.isVisible()) return 5;
+        else return 6;
     }
 
     /**
@@ -413,9 +470,9 @@ public class Window extends JFrame {
      */
     public static void main(String[] args) throws IOException, DirNotFound, ParseException {
         Window w= new Window(args);
+        //w.setSize(870,500); // simulating 17'' screen on a desktop 192x1080
         w.setExtendedState(JFrame.MAXIMIZED_BOTH);
         w.setUndecorated(true);
-        w.setVisible(true);
         w.setVisible(true);
 
     }

@@ -145,6 +145,7 @@ class JStatusTicker implements Runnable {
                 l.update(timeFrames.get(showTf));
                 w.getGraphsHeaderOne().setText(timeFramesName.get(showTf));
                 w.getGraphsHeaderTwo().setText(timeFramesName.get(showTf));
+                w.getGraphsHeaderThree().setText(timeFramesName.get(showTf));
                 showTf++;
             }
             flipC=this.ticks;
