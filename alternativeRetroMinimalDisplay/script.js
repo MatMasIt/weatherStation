@@ -25,7 +25,7 @@ var data = {
         "value": 0.00
     },
     "PM25": {
-        "name": "PM25",
+        "name": "PM2,5",
         "uom": "μg/m³",
         "value": 0.00
     }
