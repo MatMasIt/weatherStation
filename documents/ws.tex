@@ -27,11 +27,11 @@
 \pagebreak
 \section{Introduzione}
 Il Liceo Scientifico “Leonardo Cocito” di Alba attraverso questo progetto, portato avanti ormai da diversi mesi da alcuni ragazzi, vuole creare una particolare stazione meteorologica per la raccolta di dati atmosferici da mostrare poi a tutta la scuola, ma soprattutto agli alunni delle classi del biennio, con funzione didattica.\\
-I dati raccolti possono essere consultati attraverso il il sito online.
+I dati raccolti possono essere consultati attraverso il il sito online e quelli correnti sono visualizzabili su uno schermo collocato nella scuola.
 \section{La stazione}
 La stazione meteorologica del Liceo Cocito si compone essenzialmente di due parti:
 \begin{itemize}
-\item due processori, un ARDUINO MEGA 2560 e una scheda RASPBERRY 3B+;\\
+\item due computer, un microprocessore ARDUINO MEGA 2560 e un RASPBERRY 3B+;\\
 \item vari sensori per la raccolta dei dati collegati alle schede.
 \end{itemize}
 \subsection{Le schede}
@@ -43,10 +43,8 @@ Come detto in precedenza, il progetto si compone di due schede.
 \subsubsection{Il software}
 Il raspberry è dotato di un programma in python (v 3.8) che ottiene i dati di qualità dell'aria grazie ad un collegamento seriale USB con l'arduino, che li fornisce su richiesta.\\
 Questi dati, aggregati a quelli forniti dal SenseHat sono salvati nella memoria interna, mostrati sulla matrice led e accodati al caricamento sul server.
-\subsection{Lo schermo}
-Uno schermo posizionato all'esterno della stazione mostra dati storici ed in tempo reale grazie a un applicativo in java apposito
 \subsection{I sensori}
-Alla scheda \emph{Arduino} troviamo collegati 3 sensori:
+Alla scheda \emph{Arduino} sono collegati 3 sensori:
 \begin{figure}[h!]
 \centering
 \includegraphics[]{FC22.png}\\
@@ -60,24 +58,38 @@ Alla scheda \emph{Arduino} troviamo collegati 3 sensori:
 \end{figure}
 \emph{SDS011}: Per ultimo abbiamo il rilevatore di polveri sottili, che ci restituisce il risultato sempre in microgrammi su metro cubo.\\
 Il valore del PM2,5 indica la quantità di particelle con un diametro di 2,5 micron mentre PM10 ci indica la quantità di particelle con un diametro di 10 micron.
+\section{Il display}
+Il display è costituito da uno schrmo con dimensione $7''$ e un \emph{Raspberry Pi 3B+}.
+Collocato all'ingresso del liceo, ottiene i dati aggiornati dal server e mostra quelli più recenti, insieme a grafici storici.\\
+Sono disponibili due cruscotti: un display analogico con quadranti e un display minimalista "neon" digitale per una più facile lettura.
 \section{Il sito}
-La realizzazione del sito web, dove chiunque possa vedere i nostri dati, è principalmente dovuto all’enorme aiuto di un altro studente del Liceo che non ha preso parte all’intero progetto: Mattia Mascarello.\\
-I dati sono elaborati in grafici a linee che spaziano nel giorno corrente, in quello precedente, nella settimana corrente e quella antecedente, con la possibilità di esportare dati d'archivio.\\
+I dati sono elaborati in grafici a linee che spaziano nel giorno corrente, in quello precedente, nella settimana corrente e quella antecedente, nonchè nel mese precedente e quello corrente, con la possibilità di esportare dati d'archivio.\\
 \subsection{Il software}
-I dati vengono ricevuti con un codice di autorizzazione e vengono automaticamente archiviate, disponibili per l'elaborazione grafica e la ricerca ed esportazione in diversi formati.
+I dati vengono ricevuti con un codice di autorizzazione e vengono automaticamente archiviati, disponibili per l'elaborazione grafica e la ricerca ed esportazione in diversi formati.\\
+Sono anche salvati e caricati direttamente in una repository git su github.
 \section{Video}
-
 Il montaggio del video, nonché idea,  è stato realizzato grazie al prezioso aiuto di uno dei ragazzi che ha preso parte al progetto: Lorenzo Dellapiana.
 Il video è stato girato nei locali sia interni che esterni della scuola in cui alcuni studenti del programma hanno spiegato le varie vicissitudini e passaggi che li hanno portato fino alla fine di questa esperienza. Il video è particolarmente rivolto alle classi del biennio sempre per motivi didattici ma anche per invogliarli a prendere parte a progetti come questo.
 \section{Posizione}
 L' \emph{Aula del Cielo} è un progetto PCTO dell’anno scolastico 2020/2021, ideato da due docenti di scienze del liceo prof. Claudia Abrigo e prof. Loredana Ercolini, a cui hanno partecipato venti studenti delle classi terze e quarte.\\
 Obiettivo del progetto è stato realizzare  nel giardino interno della scuola una zona dedicata alla misura di fenomeni atmosferici e astronomici, una vera “Aula del Cielo”. \\
 L’aiuola del giardino è diventata una rosa dei venti, sulle pareti dell’edificio sono state costruite due meridiane, decorate con l’aiuto della professoressa Barale, e diversi orologi solari e camere stenopeiche sono ora a disposizione per osservazioni e misure.\\
-Nell’\emph{Aula del cielo} sarà anche collocata la stazione meteo da noi realizzata per la raccolta di dati atmosferici ed ambientali.
-
+La stazione meteo è collocata presso il laboratorio di Biologia, al secondo piano del liceo, per ottenere dati migliori, pur rientrando nel progetto \emph{Aula del cielo}
 \section{Open Source}
 Tutto il codice del progetto è open source e pubblicato al seguente link\\
-\url{https://github.com/MatMasIt/weatherStation}
+\url{https://github.com/MatMasIt/weatherStation}\\
+Il software include tutti i componenti di stazione, display e server.
+\subsection{Caratteristiche}
+Il software è stato realizzato per essere: modulare, performanete e resistente agli errori.
+Ecco alcune misure adottate:
+\begin{itemize}
+\item La stazione salva i dati in archivi locali compatti che poi sono caricati in base all disponibilità della rete. La memoria disponibile inoltre è sorvegliata per non raggiungere livelli eccessivi
+\item La stazione tenta di comunicare con il microprocessore Arduino e se non è possibile invia informazioni diagnostiche. Inoltre, un registro degli errori viene salvato nella memoria.\\
+\item Il caricamento dei dati e la rilevazioni sono processi asincroni e indipendenti, che possono procedere senza propagazione di errori.\\
+\item Il display ottiene i dati attraverso un programma in Go molto performante, entrambi i cruscotti operano la vista grafica in modo asincrono dalla rilevazione dei dati\\
+\item Il server tiene una copia temporanea delle elaborazione dei dati richiesti in memoria per evitare dispendio inutile di tempo e risorse. \\
+\item Sia il display che la stazione sono predisposti al controllo remoto.
+\end{itemize}
 \pagebreak
 \renewcommand{\abstractname}{Riconoscimenti}
 \begin{center}
