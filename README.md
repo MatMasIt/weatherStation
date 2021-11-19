@@ -7,7 +7,9 @@
 
 ![GitHub language count](https://img.shields.io/github/languages/count/MatMasIt/weatherStation)
 
-Source Code for the weather station situated at [Liceo Cocito](https://liceococito.edu.it): station and server code
+Source Code for the weather station situated at [Liceo Cocito](https://liceococito.edu.it): station and server 
+
+[A pdf presentation :it: is also available](documents/ws.pdf)
 
 ## Overview
 
