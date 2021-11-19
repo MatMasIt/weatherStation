@@ -82,6 +82,14 @@ Il software include tutti i componenti di stazione, display e server.
 \subsection{Caratteristiche}
 Il software è stato realizzato per essere: modulare, performanete e resistente agli errori.
 Ecco alcune misure adottate:
+\begin{itemize}
+\item La stazione salva i dati in archivi locali compatti che poi sono caricati in base all disponibilità della rete. La memoria disponibile inoltre è sorvegliata per non raggiungere livelli eccessivi
+\item La stazione tenta di comunicare con il microprocessore Arduino e se non è possibile invia informazioni diagnostiche. Inoltre, un registro degli errori viene salvato nella memoria.\\
+\item Il caricamento dei dati e la rilevazioni sono processi asincroni e indipendenti, che possono procedere senza propagazione di errori.\\
+\item Il display ottiene i dati attraverso un programma in Go molto performante, entrambi i cruscotti operano la vista grafica in modo asincrono dalla rilevazione dei dati\\
+\item Il server tiene una copia temporanea delle elaborazione dei dati richiesti in memoria per evitare dispendio inutile di tempo e risorse. \\
+\item Sia il display che la stazione sono predisposti al controllo remoto.
+\end{itemize}
 \subsection{Licenza}
 Il software è rilasciato con licenza MIT:\\
 Copyright (c) 2021 Liceo Scientifico Statale "Leonardo Cocito"\\
@@ -91,14 +99,6 @@ Con la presente si concede, a chiunque ottenga una copia di questo software e de
 L'avviso di copyright indicato sopra e questo avviso di autorizzazione devono essere inclusi in ogni copia o parte sostanziale del Software.\\
 
 IL SOFTWARE VIENE FORNITO "COSÌ COM'È", SENZA GARANZIE DI ALCUN TIPO, ESPLICITE O IMPLICITE, IVI INCLUSE, IN VIA ESEMPLIFICATIVA, LE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ A UN FINE PARTICOLARE E NON VIOLAZIONE DEI DIRITTI ALTRUI. IN NESSUN CASO GLI AUTORI O I TITOLARI DEL COPYRIGHT SARANNO RESPONSABILI PER QUALSIASI RECLAMO, DANNO O ALTRO TIPO DI RESPONSABILITÀ, A SEGUITO DI AZIONE CONTRATTUALE, ILLECITO O ALTRO, DERIVANTE DA O IN CONNESSIONE AL SOFTWARE, AL SUO UTILIZZO O AD ALTRE OPERAZIONI CON LO STESSO.
-\begin{itemize}
-\item La stazione salva i dati in archivi locali compatti che poi sono caricati in base all disponibilità della rete. La memoria disponibile inoltre è sorvegliata per non raggiungere livelli eccessivi
-\item La stazione tenta di comunicare con il microprocessore Arduino e se non è possibile invia informazioni diagnostiche. Inoltre, un registro degli errori viene salvato nella memoria.\\
-\item Il caricamento dei dati e la rilevazioni sono processi asincroni e indipendenti, che possono procedere senza propagazione di errori.\\
-\item Il display ottiene i dati attraverso un programma in Go molto performante, entrambi i cruscotti operano la vista grafica in modo asincrono dalla rilevazione dei dati\\
-\item Il server tiene una copia temporanea delle elaborazione dei dati richiesti in memoria per evitare dispendio inutile di tempo e risorse. \\
-\item Sia il display che la stazione sono predisposti al controllo remoto.
-\end{itemize}
 \pagebreak
 \renewcommand{\abstractname}{Riconoscimenti}
 \begin{center}
