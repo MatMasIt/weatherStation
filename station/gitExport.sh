@@ -3,6 +3,7 @@ cd $dir
 mkdir -p results
 python3 export.py
 cd results
+git pull
 git add *
 git commit -m "Regular data update"
 git push origin main
