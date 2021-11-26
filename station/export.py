@@ -1,4 +1,6 @@
+
 from datetime import datetime
+import os
 from pathlib import Path
 dests = {}
 gitExport = True
@@ -22,12 +24,14 @@ for path in Path('storedData').rglob('*.csv'):
             le = line.split(",")
             if len(le) == 1:
                 continue
-            lf = "\""+datetime.utcfromtimestamp(int(le[0])).strftime('%Y-%m-%d %H:%M:%S')+"\";\""+str(le[2]).replace(".",",")+"\"\n"
+            lf = datetime.utcfromtimestamp(int(le[0])).strftime('%Y-%m-%d %H:%M:%S')+","+str(le[2])+"\n"
             if gitExport:
                 foldPath = "results/"+datetime.utcfromtimestamp(int(le[0])).strftime('%Y/%m/%d')
                 Path(foldPath).mkdir(parents=True, exist_ok=True)
                 f = open(foldPath+"/"+dests[le[1]],"a+")
                 f.write(lf)
                 f.close()
+                os.system("sort "+foldPath+"/"+dests[le[1]]+" | uniq | tee temp > /dev/null")
+                os.system("mv temp "+foldPath+"/"+dests[le[1]])
             else:
                 dests[le[1]].write(lf)
