@@ -11,6 +11,8 @@ Source Code for the weather station situated at [Liceo Cocito](https://liceococi
 
 [A pdf presentation :it: is also available](documents/ws.pdf)
 
+![Open data - explore the complete dataset](https://github.com/StazioneMeteoCocito/dati)
+
 ## Overview
 
 |Component|Path|Description|Languages|Further developments|
