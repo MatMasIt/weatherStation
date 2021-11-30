@@ -304,7 +304,10 @@
                             dq = JSON.parse(data);
                         });
                     }, 5000);
-                    google.charts.load('46', { 'packages': ['corechart','gauge'] });
+                    google.charts.load('46', {
+                        'packages': ['corechart', 'gauge', 'table'],
+                        "language": "it"
+                    });
                     google.charts.setOnLoadCallback(cdivS);
 
                 </script>
@@ -439,7 +442,7 @@
                         </center>
                     </div>
                     <div id="plot"></div>
-                    <table class="w3-table-all w3-card-4" id="dTable">
+                    <div class="w3-card-4" id="dTable">
                     </table>
                 </div>
                 <table class="w3-table-all w3-card-4">
@@ -467,10 +470,6 @@
 
 </body>
 <script>
-    google.charts.load('current', {
-        packages: ['corechart'],
-        "language": "it"
-    });
 
 
     function dayDisplay(result) {
@@ -523,13 +522,22 @@
         $("#setSize").html(result["stats"]["setSize"]);
         $("#plot").hide();
         $("#dTable").show();
-        var html = "<tr><th>Istante</th><th>Valore</th></tr>";
-        var list = [];
+        var data = new google.visualization.DataTable();
+        data.addColumn('date', 'Istante');
+        data.addColumn('number', 'Valore');
+        var tlist = [], ind = 1;
         result["data"].forEach(function iterate(element) {
-            html += "<tr><td>" + (new Date(element["time"] * 1000)).toLocaleString() + "</td><td>" + element["value"].toFixed(2) + " " + result["unit"] + "</td></tr>";
+            tlist.push([{v :new Date(element["time"] * 1000), f: (new Date(element["time"] * 1000)).toLocaleString()  }, { v: element["value"], f: element["value"].toFixed(2) + " " + result["unit"] }]);
+            ind++;
         });
+        data.addRows(tlist);
+        
 
-        $("#dTable").html(html);
+        var table = new google.visualization.Table(document.getElementById('dTable'));
+
+        table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+
+
         $("#plottingArea").show();
     }
 
