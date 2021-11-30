@@ -305,7 +305,7 @@
                         });
                     }, 5000);
                     google.charts.load('46', {
-                        'packages': ['corechart', 'gauge', 'table'],
+                        'packages': ['corechart', 'gauge', 'table', 'calendar'],
                         "language": "it"
                     });
                     google.charts.setOnLoadCallback(cdivS);
@@ -320,6 +320,11 @@
                     class="mainB w3-bar-item w3-button w3-mobile" target="_blank">Informazioni sul progetto</a>
                 <a href="https://github.com/StazioneMeteoCocito/dati"
                     class="mainB w3-bar-item w3-button w3-mobile">Archivio</a>
+                <a href="https://github.com/MatMasIt/weatherStation" class="mainB w3-bar-item w3-button w3-mobile">Open
+                    Source</a>
+
+                <a id="activity" class="mainB w3-bar-item w3-button w3-mobile">Attività</a>
+
             </div>
             <div class="w3-bar" id="datatype">
                 <a href="#" class="w3-bar-item w3-button w3-mobile w3-red dt" data-type="T">Temperatura</a>
@@ -348,7 +353,11 @@
                 when = "";
             $(".mainB").click(function () {
                 if ($(this).attr("id") != "graphics") $("#plottingArea").hide();
-                else $("#archive").hide();
+                if ($(this).attr("id") != "activity") $("#actTab").hide();
+                else {
+                    tabDraw();
+                    $("#actTab").show();
+                }
                 $(".mainB:not([id=" + ($(this).attr("id")) + "])").removeClass("w3-grey");
                 intent = $(this).attr("id");
                 if (!$(this).hasClass("w3-grey") && $(this).attr("data-dropdown") == "yes") {
@@ -432,7 +441,9 @@
 
 
         <div class="w3-container w3-content">
-
+            <div id="actTab">
+                <div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
+            </div>
             <div id="plottingArea">
                 <p class="w3-opacity"><b id="plottingTitle"></b></p>
                 <div class="w3-panel w3-white w3-card w3-display-container">
@@ -443,30 +454,30 @@
                     </div>
                     <div id="plot"></div>
                     <div class="w3-card-4" id="dTable">
+                        </table>
+                    </div>
+                    <table class="w3-table-all w3-card-4">
+                        <tr>
+                            <th>Media</th>
+                            <th>Minimo</th>
+                            <th>Massimo</th>
+                            <th>Deviazione Standard</th>
+                            <th>Numero rilevazioni</th>
+                        </tr>
+                        <tr>
+                            <td id="avg"></td>
+                            <td id="min"></td>
+                            <td id="max"></td>
+                            <td id="stdev"></td>
+                            <td id="setSize"></td>
+                        </tr>
                     </table>
                 </div>
-                <table class="w3-table-all w3-card-4">
-                    <tr>
-                        <th>Media</th>
-                        <th>Minimo</th>
-                        <th>Massimo</th>
-                        <th>Deviazione Standard</th>
-                        <th>Numero rilevazioni</th>
-                    </tr>
-                    <tr>
-                        <td id="avg"></td>
-                        <td id="min"></td>
-                        <td id="max"></td>
-                        <td id="stdev"></td>
-                        <td id="setSize"></td>
-                    </tr>
-                </table>
+
+
             </div>
 
-
         </div>
-
-    </div>
 
 </body>
 <script>
@@ -513,6 +524,29 @@
         chart.draw(data, options);
     }
 
+
+    function tabDraw() {
+        $.get("heatmap.php").done(function (data) {
+            var results = JSON.parse(data);
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn({ type: 'date', id: 'Data' });
+            dataTable.addColumn({ type: 'number', id: 'Misurazioni' });
+            var list = [];
+            Object.keys(results).forEach(function iterate(key) {
+                list.push([new Date(key * 1000), results[key]]);
+            });
+            dataTable.addRows(list);
+
+            var chart = new google.visualization.Calendar(document.getElementById('calendar_basic'));
+
+            var options = {
+                title: "Misurazioni giornaliere",
+                height: 350,
+            };
+
+            chart.draw(dataTable, options);
+        });
+    }
     function tableDisplay(result) {
 
         $("#avg").html(result["stats"]["avg"]);
@@ -527,11 +561,11 @@
         data.addColumn('number', 'Valore');
         var tlist = [], ind = 1;
         result["data"].forEach(function iterate(element) {
-            tlist.push([{v :new Date(element["time"] * 1000), f: (new Date(element["time"] * 1000)).toLocaleString()  }, { v: element["value"], f: element["value"].toFixed(2) + " " + result["unit"] }]);
+            tlist.push([{ v: new Date(element["time"] * 1000), f: (new Date(element["time"] * 1000)).toLocaleString() }, { v: element["value"], f: element["value"].toFixed(2) + " " + result["unit"] }]);
             ind++;
         });
         data.addRows(tlist);
-        
+
 
         var table = new google.visualization.Table(document.getElementById('dTable'));
 
