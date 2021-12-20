@@ -18,13 +18,13 @@ class Station:
     def __init__(self):
         pathlib.Path("storedData").mkdir(parents=True, exist_ok=True)
 
-    def __path(typeData):
+    def __path(self, typeData):
         return "storedData/"+datetime.datetime.now().strftime('%Y/%m/%d')+"/"+typeData+".csv"
 
     def __bufferin(self, value, typeData):
         try:
             q = self.__path(typeData)
-            pathlib.Path(os.path.dirname(q)).mkdir(exist_ok=True)
+            pathlib.Path(os.path.dirname(q)).mkdir(parents=True, exist_ok=True)
             pathlib.Path(q).touch(exist_ok=True)
             f = open(q, "a+")
             f.write(datetime.datetime.now().strftime(
