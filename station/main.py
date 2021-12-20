@@ -37,7 +37,7 @@ while True:
         s.record_humidity(allData["humidity"])
         print("Humidity {h:.2f}".format(h=allData["humidity"]))
         s.record_pressure(allData["pressure"])
-        print("Pressure {p:.2f} hPa".format(p=allData["humidity"]))
+        print("Pressure {p:.2f} hPa".format(p=allData["pressure"]))
         s.record_temperature(allData["temperature"])
         arduino = get_sensors_serial(ser)
         if arduino:
