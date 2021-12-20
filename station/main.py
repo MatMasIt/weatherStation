@@ -1,5 +1,4 @@
 # 2021, Mattia Mascarello, The MIT License
-from gpiozero import CPUTemperature
 import serial
 from Station import Station
 import time
