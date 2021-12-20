@@ -1,4 +1,3 @@
 #!/bin/bash
-cd /home/pi/Desktop/stazioneMeteo
-python3 /home/pi/Desktop/stazioneMeteo/main.py
-
+cd /home/pi/Desktop/station
+python3 /home/pi/Desktop/station/main.py

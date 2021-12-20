@@ -1,3 +1,3 @@
 #!/bin/bash
-tmux new -s StazioneMeteo -d /home/pi/Desktop/stazioneMeteo/boot.sh
+tmux new -s StazioneMeteo -d /home/pi/Desktop/station/boot.sh
 # Saved in crontab (root)
