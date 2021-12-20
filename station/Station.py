@@ -15,7 +15,7 @@ import glob
 
 
 class Station:
-    def __init__():
+    def __init__(self):
         pathlib.Path("storedData").mkdir(parents=True, exist_ok=True)
 
     def __path(typeData):
