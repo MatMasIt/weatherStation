@@ -8,3 +8,5 @@ top -bn1 | grep load | awk '{printf "CPU Load: %.2f %%\n",$(NF-2)*100}'
 du -sh storedData
 tmux ls
 iwgetid -r
+uptime
+ps -aux | grep "main" | grep -v "grep"
