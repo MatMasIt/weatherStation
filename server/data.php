@@ -56,6 +56,24 @@ function weekOfYear($date)
         return $weekOfYear;
     }
 }
+
+function weeks_in_month($month, $year)
+{
+    // Start of month
+    $start = mktime(0, 0, 0, $month, 1, $year);
+    // End of month
+    $end = mktime(0, 0, 0, $month, date('t', $start), $year);
+    // Start week
+    $start_week = date('W', $start);
+    // End week
+    $end_week = date('W', $end);
+
+    if ($end_week < $start_week) { // Month wraps
+        return ((52 + $end_week) - $start_week) + 1;
+    }
+
+    return ($end_week - $start_week) + 1;
+}
 function get_daily($d, $m, $y, $t)
 {
     $mapping = ["T" => "temperature.csv", "H" => "humidity.csv", "P" => "pressure.csv", "PM10" => "pm10.csv", "PM25" => "pm25.csv", "S" => "smoke.csv"];
@@ -74,7 +92,7 @@ function get_daily($d, $m, $y, $t)
     }
     return $list;
 }
-function get_weekly($w, $m, $y, $t)
+function get_weekly($w, $m, $y, $t, $monthForce = 0)
 {
     $data = ["data" => []];
     if ($w == null) $w = weekOfMonth(date("U"));
@@ -83,7 +101,7 @@ function get_weekly($w, $m, $y, $t)
     $begin = strtotime("monday this week", strtotime("+ " . (($w - 1) * 7) . " days", strtotime("$y-$m-01")));
     $end = strtotime("next monday", $begin);
     for ($i = $begin; $i < $end; $i += floor(($end - $begin) / 7)) {
-
+        if ($monthForce != 0 && date("m", $i) != $monthForce) continue;
         $q = get_daily(date("d", $i), date("m", $i), date("Y", $i), $t);
         if (count($q) == 0) continue;
 
@@ -135,22 +153,22 @@ switch ($_GET["when"]) {
         $final["data"] = [];
         $final["days"] = [];
         for ($i = 1; $i < weekOfMonth(strtotime("last week")) + 1; $i++) {
-            $w = get_weekly($i + 1, date("m"), date("Y"), $_GET["dataType"]);
-            if($w["data"]!= null && count($w["data"])) $final["data"] = array_merge($final["data"], $w["data"]);
-            if($w["days"]!= null && count($w["days"])) $final["days"] = array_merge($final["days"], $w["days"]);
+            $w = get_weekly($i, date("m"), date("Y"), $_GET["dataType"], date("m"));
+            if ($w["data"] != null && count($w["data"])) $final["data"] = array_merge($final["data"], $w["data"]);
+            if ($w["days"] != null && count($w["days"])) $final["days"] = array_merge($final["days"], $w["days"]);
         }
         $final["periodName"] = "Dati di questo mese";
         break;
     case "prevmonth":
-        $nWeeks = 7;
         $month = date("m", strtotime("last day of last month"));
         $year = date("y", strtotime("last day of last month"));
+        $nWeeks = weeks_in_month($month, $year);
         $final["data"] = [];
         $final["days"] = [];
-        for ($i = 2; $i < $nWeeks; $i++) {
-            $w = get_weekly($i + 1, $month, $year, $_GET["dataType"]);
-            if($w["data"]!= null && count($w["data"])) $final["data"] = array_merge($final["data"], $w["data"]);
-            if($w["days"]!= null && count($w["days"])) $final["days"] = array_merge($final["days"], $w["days"]);;
+        for ($i = 1; $i < $nWeeks; $i++) {
+            $w = get_weekly($i, $month, $year, $_GET["dataType"], $month);
+            if ($w["data"] != null && count($w["data"])) $final["data"] = array_merge($final["data"], $w["data"]);
+            if ($w["days"] != null && count($w["days"])) $final["days"] = array_merge($final["days"], $w["days"]);;
         }
         $final["periodName"] = "Dati del mese precedente";
         break;
