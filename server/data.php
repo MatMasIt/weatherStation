@@ -222,6 +222,7 @@ $final["stats"]["avg"] = number_format($final["stats"]["avg"], 2, ",", "'") . $u
 $final["stats"]["max"] = number_format($final["stats"]["max"], 2, ",", "'") . $unit;
 $final["stats"]["min"] = number_format($final["stats"]["min"], 2, ",", "'") . $unit;
 $final["stats"]["stdev"] = number_format($final["stats"]["stdev"], 2, ",", "'") . $unit;
+$final["stats"]["mode"] = number_format($final["stats"]["mode"], 2, ",", "'") . $unit;
 $final["color"] = $color;
 $final["yAxis"] = $yAxis;
 $final["unit"] = $unit;
