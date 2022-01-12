@@ -118,15 +118,25 @@ function get_stats($data)
     $max = -111111111111;
     $min = 1111111111111111;
     $allData = [];
+    $modeMap = [];
     foreach ($data as $e) {
         $avgTot += $e["value"];
         $allData[] = $e["value"];
         $avgNum++;
         $max = max($max, $e["value"]);
         $min = min($min, $e["value"]);
+        $modeMap[(string)(int)$e["value"]]++;
+    }
+    $finalIntegerMode = -1000000000;
+    $imodeCount = -1;
+    foreach($modeMap as $value=>$occurrence){
+        if($occurrence>$imodeCount){
+            $finalIntegerMode=$value;
+            $imodeCount=$occurrence;
+        }
     }
     if ($avgNum == 0) return ["avg" => 0, "max" => 0, "min" => 0, "stdev" => 0, "setSize" => 0];
-    return ["avg" => $avgTot / $avgNum, "max" => $max, "min" => $min, "stdev" => stats_standard_deviation($allData), "setSize" => $avgNum];
+    return ["avg" => $avgTot / $avgNum, "max" => $max, "min" => $min, "stdev" => stats_standard_deviation($allData), "setSize" => $avgNum, "mode"=>$finalIntegerMode];
 }
 $final = [];
 switch ($_GET["when"]) {
