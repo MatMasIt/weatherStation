@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <style>
     .w3-magenta {
         background-color: #d80073;
@@ -167,6 +166,7 @@
 
                 <script>
                     var dq = null;
+
                     function cdivS() {
 
                         var dataT = google.visualization.arrayToDataTable([
@@ -174,15 +174,15 @@
                             ['Temperatura', 0]
                         ]);
                         var optionsT = {
-                            min: -60,
-                            max: 60,
-                            yellowFrom: 25,
+                            min: -20,
+                            max: 40,
+                            yellowFrom: 20,
                             yellowTo: 30,
                             redFrom: 30,
-                            redTo: 60,
-                            greenFrom: 0,
+                            redTo: 40,
+                            greenFrom: -20,
                             greenTo: 25,
-                            minorTicks: 5,
+                            minorTicks: 10,
                             width: screen.width / 4
                         };
                         var dataH = google.visualization.arrayToDataTable([
@@ -193,13 +193,13 @@
                         var optionsH = {
                             min: 0,
                             max: 110,
-                            yellowFrom: 60,
+                            yellowFrom: 50,
                             yellowTo: 85,
                             redFrom: 85,
-                            redTo: 100,
+                            redTo: 110,
                             greenFrom: 0,
                             greenTo: 50,
-                            minorTicks: 5,
+                            minorTicks: 10,
                             width: screen.width / 4
                         };
                         var dataP = google.visualization.arrayToDataTable([
@@ -208,29 +208,29 @@
                         ]);
 
                         var optionsP = {
-                            min: 0,
-                            max: 2000,
-                            yellowFrom: 600,
-                            yellowTo: 900,
-                            redFrom: 300,
-                            redTo: 600,
-                            greenFrom: 900,
-                            greenTo: 2000,
-                            minorTicks: 5,
+                            min: 900,
+                            max: 1100,
+                            yellowFrom: 950,
+                            yellowTo: 1000,
+                            redFrom: 900,
+                            redTo: 950,
+                            greenFrom: 1000,
+                            greenTo: 1100,
+                            minorTicks: 10,
                             width: screen.width / 4
                         };
 
 
                         var optionsPM10 = {
                             min: 0,
-                            max: 999,
+                            max: 150,
                             yellowFrom: 40,
                             yellowTo: 50,
                             redFrom: 50,
-                            redTo: 999,
+                            redTo: 150,
                             greenFrom: 0,
                             greenTo: 40,
-                            minorTicks: 5,
+                            minorTicks: 10,
                             width: screen.width / 4
                         };
                         var dataPM10 = google.visualization.arrayToDataTable([
@@ -239,20 +239,33 @@
                         ]);
                         var optionsPM25 = {
                             min: 0,
-                            max: 999,
-                            minorTicks: 5,
-                            width: screen.width / 4
+                            max: 150,
+                            minorTicks: 10,
+                            width: screen.width / 4,
+                            yellowFrom: 20,
+                            yellowTo: 25,
+                            redFrom: 25,
+                            redTo: 150,
+                            greenFrom: 0,
+                            greenTo: 20
+
                         };
                         var dataPM25 = google.visualization.arrayToDataTable([
                             ['Label', 'Value'],
-                            ['PM25', 0]
+                            ['PM2,5', 0]
                         ]);
 
                         var optionsS = {
                             min: 0,
-                            max: 999,
-                            minorTicks: 5,
-                            width: screen.width / 4
+                            max: 1000,
+                            minorTicks: 10,
+                            width: screen.width / 4,
+                            yellowFrom: 50,
+                            yellowTo: 300,
+                            redFrom: 300,
+                            redTo: 1000,
+                            greenFrom: 0,
+                            greenTo: 50
                         };
                         var dataS = google.visualization.arrayToDataTable([
                             ['Label', 'Value'],
@@ -272,35 +285,50 @@
                         var pmSch = new google.visualization.Gauge(document.getElementById('GS'));
                         pmSch.draw(dataS, optionsS);
 
-                        setInterval(function () {
+                        setInterval(function() {
                             dataT.setValue(0, 1, dq["T"]);
                             tch.draw(dataT, optionsT);
                         }, 5000);
-                        setInterval(function () {
+                        setInterval(function() {
                             dataH.setValue(0, 1, dq["H"])
                             hch.draw(dataH, optionsH);
                         }, 5000);
-                        setInterval(function () {
+                        setInterval(function() {
                             dataP.setValue(0, 1, dq["P"])
                             pch.draw(dataP, optionsP);
                         }, 5000);
-                        setInterval(function () {
+                        setInterval(function() {
                             dataPM10.setValue(0, 1, dq["PM10"])
                             pm10ch.draw(dataPM10, optionsPM10);
                         }, 5000);
-                        setInterval(function () {
+                        setInterval(function() {
                             dataPM25.setValue(0, 1, dq["PM25"])
                             pm25ch.draw(dataPM25, optionsPM25);
                         }, 5000);
-                        setInterval(function () {
+                        setInterval(function() {
                             dataS.setValue(0, 1, dq["S"])
                             pmSch.draw(dataS, optionsS);
                         }, 5000);
 
+                        $.get("recent.php").done(function(data) {
+                            dq = JSON.parse(data);
+                            dataT.setValue(0, 1, dq["T"]);
+                            tch.draw(dataT, optionsT);
+                            dataH.setValue(0, 1, dq["H"])
+                            hch.draw(dataH, optionsH);
+                            dataP.setValue(0, 1, dq["P"])
+                            pch.draw(dataP, optionsP);
+                            dataPM10.setValue(0, 1, dq["PM10"])
+                            pm10ch.draw(dataPM10, optionsPM10);
+                            dataPM25.setValue(0, 1, dq["PM25"])
+                            pm25ch.draw(dataPM25, optionsPM25);
+                            dataS.setValue(0, 1, dq["S"])
+                            pmSch.draw(dataS, optionsS);
 
+                        });
                     }
-                    setInterval(function () {
-                        $.get("recent.php").done(function (data) {
+                    setInterval(function() {
+                        $.get("recent.php").done(function(data) {
                             dq = JSON.parse(data);
                         });
                     }, 5000);
@@ -309,17 +337,14 @@
                         "language": "it"
                     });
                     google.charts.setOnLoadCallback(cdivS);
-
                 </script>
             </span>
 
             <div class="w3-bar w3-black">
                 <a href="#" id="graphics" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Grafici</a>
                 <a href="#" id="datas" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Dati</a>
-                <a href="https://github.com/MatMasIt/weatherStation/raw/main/documents/ws.pdf"
-                    class="mainB w3-bar-item w3-button w3-mobile" target="_blank">Informazioni sul progetto</a>
-                <a href="https://github.com/StazioneMeteoCocito/dati"
-                    class="mainB w3-bar-item w3-button w3-mobile">Archivio</a>
+                <a href="https://github.com/MatMasIt/weatherStation/raw/main/documents/ws.pdf" class="mainB w3-bar-item w3-button w3-mobile" target="_blank">Informazioni sul progetto</a>
+                <a href="https://github.com/StazioneMeteoCocito/dati" class="mainB w3-bar-item w3-button w3-mobile">Archivio</a>
                 <a href="https://github.com/MatMasIt/weatherStation" class="mainB w3-bar-item w3-button w3-mobile">Open
                     Source</a>
 
@@ -351,7 +376,8 @@
             var intent = "",
                 datatype = "",
                 when = "";
-            $(".mainB").click(function () {
+            $(".mainB").click(function() {
+
                 if ($(this).attr("id") != "graphics") $("#plottingArea").hide();
                 if ($(this).attr("id") != "activity") $("#actTab").hide();
                 else {
@@ -372,7 +398,7 @@
             });
 
 
-            $(".dt").click(function () {
+            $(".dt").click(function() {
                 $("#when").removeClass("w3-black");
                 $("#when").removeClass("w3-red");
                 $("#when").removeClass("w3-blue");
@@ -398,20 +424,20 @@
                     $("#when").hide();
                 }
             });
-            $(".td").click(function () {
+            $(".td").click(function() {
                 when = $(this).attr("data-when");
                 $(".progress-line").show();
                 $.get("data.php", {
-                    "when": when,
-                    "dataType": datatype
-                })
+                        "when": when,
+                        "dataType": datatype
+                    })
 
-                    .done(function (data) {
+                    .done(function(data) {
+
                         if (!data["data"].length) {
                             $("#noContent").show();
-                            setTimeout(function () { $("#plot").hide(); }, 1000);
-                        }
-                        else {
+                            $("#plot").hide();
+                        } else {
                             $("#noContent").hide();
                             $("#plot").show();
                         }
@@ -441,8 +467,8 @@
 
 
         <div class="w3-container w3-content">
-            <div id="actTab">
-                <div id="calendar_basic" style="width: 1000px; height: 350px;"></div>
+            <div id="actTab" style="">
+                <div id="calendar_basic" style="width: 1000px;height: 350px;"></div>
             </div>
             <div id="plottingArea">
                 <p class="w3-opacity"><b id="plottingTitle"></b></p>
@@ -454,7 +480,7 @@
                     </div>
                     <div id="plot"></div>
                     <div class="w3-card-4" id="dTable">
-                        </table>
+
                     </div>
                     <table class="w3-table-all w3-card-4">
                         <tr>
@@ -462,6 +488,7 @@
                             <th>Minimo</th>
                             <th>Massimo</th>
                             <th>Deviazione Standard</th>
+                            <th>Moda</th>
                             <th>Numero rilevazioni</th>
                         </tr>
                         <tr>
@@ -469,6 +496,7 @@
                             <td id="min"></td>
                             <td id="max"></td>
                             <td id="stdev"></td>
+                            <td id="mode"></td>
                             <td id="setSize"></td>
                         </tr>
                     </table>
@@ -481,8 +509,6 @@
 
 </body>
 <script>
-
-
     function dayDisplay(result) {
 
         $("#avg").html(result["stats"]["avg"]);
@@ -490,6 +516,7 @@
         $("#max").html(result["stats"]["max"]);
         $("#stdev").html(result["stats"]["stdev"]);
         $("#setSize").html(result["stats"]["setSize"]);
+        $("#mode").html(result["stats"]["mode"]);
         $("#plottingArea").show();
         $("#plot").show();
         $("#dTable").hide();
@@ -526,11 +553,17 @@
 
 
     function tabDraw() {
-        $.get("heatmap.php").done(function (data) {
+        $.get("heatmap.php").done(function(data) {
             var results = JSON.parse(data);
             var dataTable = new google.visualization.DataTable();
-            dataTable.addColumn({ type: 'date', id: 'Data' });
-            dataTable.addColumn({ type: 'number', id: 'Misurazioni' });
+            dataTable.addColumn({
+                type: 'date',
+                id: 'Data'
+            });
+            dataTable.addColumn({
+                type: 'number',
+                id: 'Misurazioni'
+            });
             var list = [];
             Object.keys(results).forEach(function iterate(key) {
                 list.push([new Date(key * 1000), results[key]]);
@@ -547,6 +580,7 @@
             chart.draw(dataTable, options);
         });
     }
+
     function tableDisplay(result) {
 
         $("#avg").html(result["stats"]["avg"]);
@@ -554,14 +588,23 @@
         $("#max").html(result["stats"]["max"]);
         $("#stdev").html(result["stats"]["stdev"]);
         $("#setSize").html(result["stats"]["setSize"]);
+        $("#mode").html(result["stats"]["mode"]);
         $("#plot").hide();
+        $("#plottingTitle").text(result["periodName"]);
         $("#dTable").show();
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'Istante');
         data.addColumn('number', 'Valore');
-        var tlist = [], ind = 1;
+        var tlist = [],
+            ind = 1;
         result["data"].forEach(function iterate(element) {
-            tlist.push([{ v: new Date(element["time"] * 1000), f: (new Date(element["time"] * 1000)).toLocaleString() }, { v: element["value"], f: element["value"].toFixed(2) + " " + result["unit"] }]);
+            tlist.push([{
+                v: new Date(element["time"] * 1000),
+                f: (new Date(element["time"] * 1000)).toLocaleString()
+            }, {
+                v: element["value"],
+                f: element["value"].toFixed(2) + " " + result["unit"]
+            }]);
             ind++;
         });
         data.addRows(tlist);
@@ -569,7 +612,11 @@
 
         var table = new google.visualization.Table(document.getElementById('dTable'));
 
-        table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+        table.draw(data, {
+            showRowNumber: true,
+            width: '100%',
+            height: '100%'
+        });
 
 
         $("#plottingArea").show();
@@ -582,8 +629,10 @@
         $("#max").html(result["stats"]["max"]);
         $("#stdev").html(result["stats"]["stdev"]);
         $("#setSize").html(result["stats"]["setSize"]);
+        $("#mode").html(result["stats"]["mode"]);
         $("#plottingArea").show();
         $("#dTable").hide();
+        $("#plottingTitle").text(result["periodName"]);
         $("#plot").show();
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'X');
