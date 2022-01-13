@@ -396,6 +396,7 @@
                     $("#datatype").hide();
                     $("#when").hide();
                 }
+                sView();
             });
 
 
@@ -424,6 +425,7 @@
 
                     $("#when").hide();
                 }
+                sView();
             });
             
             function sView(){
