@@ -29,3 +29,4 @@ foreach ($hw as $fn => $fm) {
     $f = file("data/$y/$m/$d/$fn");
     $dataL[$fm] = (float)explode(",", $f[count($f) - 1])[1];
 }
+$dataL["update"]=date("d/m/Y H:i:s", file_get_contents("lastContact"));
