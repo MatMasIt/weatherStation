@@ -113,8 +113,7 @@
                     </div>
                     <div class="row">
                         <div class="column" style="width:80vw">
-                            <p><b>Ultimo Aggiornamento:
-                                    <?php echo date("d/m/Y H:i:s", file_get_contents("lastContact")); ?>
+                            <p><b>Ultimo Aggiornamento: <span id="lastU"></span>
                                 </b></p>
                         </div>
                     </div>
@@ -312,6 +311,7 @@
 
                         $.get("recent.php").done(function(data) {
                             dq = JSON.parse(data);
+                            $("#lastU").html(dq["update"]);
                             dataT.setValue(0, 1, dq["T"]);
                             tch.draw(dataT, optionsT);
                             dataH.setValue(0, 1, dq["H"])
@@ -330,6 +330,7 @@
                     setInterval(function() {
                         $.get("recent.php").done(function(data) {
                             dq = JSON.parse(data);
+                            $("#lastU").html(dq["update"]);
                         });
                     }, 5000);
                     google.charts.load('46', {
@@ -341,8 +342,8 @@
             </span>
 
             <div class="w3-bar w3-black">
-                <a href="#" id="graphics" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Grafici</a>
-                <a href="#" id="datas" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Dati</a>
+                <a href="#plot" id="graphics" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Grafici</a>
+                <a href="#plot" id="datas" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Dati</a>
                 <a href="https://github.com/MatMasIt/weatherStation/raw/main/documents/ws.pdf" class="mainB w3-bar-item w3-button w3-mobile" target="_blank">Informazioni sul progetto</a>
                 <a href="https://github.com/StazioneMeteoCocito/dati" class="mainB w3-bar-item w3-button w3-mobile">Archivio</a>
                 <a href="https://github.com/MatMasIt/weatherStation" class="mainB w3-bar-item w3-button w3-mobile">Open
@@ -352,21 +353,21 @@
 
             </div>
             <div class="w3-bar" id="datatype">
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-red dt" data-type="T">Temperatura</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-blue dt" data-type="H">Umidità</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-green dt" data-type="P">Pressione</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-cyan dt" data-type="PM10">PM10</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-magenta dt" data-type="PM25">PM2.5</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile w3-orange dt" data-type="S">Fumo e vapori
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-red dt" data-type="T">Temperatura</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-blue dt" data-type="H">Umidità</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-green dt" data-type="P">Pressione</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-cyan dt" data-type="PM10">PM10</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-magenta dt" data-type="PM25">PM2.5</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-orange dt" data-type="S">Fumo e vapori
                     infiammabili</a>
             </div>
             <div class="w3-bar w3-black" id="when">
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="today">Oggi</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="yesterday">Ieri</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="weekly">Questa settimana</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="weeklyprev">Settimana precedente</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="thismonth">Questo mese</a>
-                <a href="#" class="w3-bar-item w3-button w3-mobile td" data-when="prevmonth">Lo scorso mese</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="today">Oggi</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="yesterday">Ieri</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="weekly">Questa settimana</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="weeklyprev">Settimana precedente</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="thismonth">Questo mese</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="prevmonth">Lo scorso mese</a>
             </div>
 
         </div>
@@ -424,8 +425,9 @@
                     $("#when").hide();
                 }
             });
-            $(".td").click(function() {
-                when = $(this).attr("data-when");
+            
+            function sView(){
+                if( typeof when == 'undefined' || ! when || typeof intent == 'undefined' || !intent || typeof datatype == 'undefined' || !datatype) return false;
                 $(".progress-line").show();
                 $.get("data.php", {
                         "when": when,
@@ -452,10 +454,15 @@
                         }
 
                     });
-
-
+            }
+            $(".td").click(function() {
+                when = $(this).attr("data-when");
+                sView();
 
             });
+            setInterval(function(){
+                sView();
+            },30*1000);
         </script>
         <div class="w3-container w3-content" id="landing">
             <div class="w3-panel w3-white w3-card w3-display-container">
@@ -478,7 +485,9 @@
                             <h2>Nessun Contenuto</h2>
                         </center>
                     </div>
+                    
                     <div id="plot"></div>
+                   
                     <div class="w3-card-4" id="dTable">
 
                     </div>
@@ -660,7 +669,6 @@
             });
         });
         var options = {
-
             vAxis: {
                 title: result["yAxis"] + "( " + result["unit"] + " )"
             },
