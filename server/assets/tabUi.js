@@ -3,12 +3,12 @@ var intent = "",
     datatype = "",
     when = "";
 $(".mainB").click(function () {
-
     if ($(this).attr("id") != "graphics") $("#plottingArea").hide();
     if ($(this).attr("id") != "activity") $("#actTab").hide();
     else {
         tabDraw();
         $("#actTab").show();
+        $("#plottingArea").hide();
     }
     $(".mainB:not([id=" + ($(this).attr("id")) + "])").removeClass("w3-grey");
     intent = $(this).attr("id");
@@ -55,6 +55,7 @@ $(".dt").click(function () {
 
 function sView() {
     if (typeof when == 'undefined' || !when || typeof intent == 'undefined' || !intent || typeof datatype == 'undefined' || !datatype) return false;
+    if (intent == "activity") return false;
     $(".progress-line").show();
     $.get("data.php", {
         "when": when,
