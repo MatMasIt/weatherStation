@@ -7,6 +7,15 @@ function lastE($n)
 $hw = ["temperature.csv" => "T", "humidity.csv" => "H", "pressure.csv" => "P", "pm10.csv" => "PM10", "pm25.csv" => "PM25", "smoke.csv" => "S"];
 $dataL = [];
 $y = 0;
+if(!count(glob("data/2*"))){
+    http_response_code(500);
+    header("Content-Type: text/html");
+    ?>
+    <h1>Update in progress</h1>
+    <p>Data cannot be displayed right now</h1>
+    <?php
+    exit;
+}
 foreach (glob("data/2*") as $yp) {
     $yt = lastE($yp);
     if ($y < $yt) $y = $yt;

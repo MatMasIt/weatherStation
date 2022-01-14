@@ -1,0 +1,104 @@
+.w3-magenta {
+    background-color: #d80073;
+}
+
+.progress-line,
+.progress-line:before {
+    height: 3px;
+    width: 100%;
+    margin: 0;
+    height: 15px;
+}
+
+.progress-line {
+    background-color: #b3d4fc;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.progress-line:before {
+    background-color: #3f51b5;
+    content: '';
+    -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@-webkit-keyframes running-progress {
+    0% {
+        margin-left: 0px;
+        margin-right: 100%;
+    }
+
+    50% {
+        margin-left: 25%;
+        margin-right: 0%;
+    }
+
+    100% {
+        margin-left: 100%;
+        margin-right: 0;
+    }
+}
+
+@keyframes running-progress {
+    0% {
+        margin-left: 0px;
+        margin-right: 100%;
+    }
+
+    50% {
+        margin-left: 25%;
+        margin-right: 0%;
+    }
+
+    100% {
+        margin-left: 100%;
+        margin-right: 0;
+    }
+}
+
+#pline {
+    display: none;
+}
+
+/* Float four columns side by side */
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {
+    margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Responsive columns */
+/*@media screen and (max-width: 600px) {
+                        .column {
+                            width: 100%;
+                            display: block;
+                            margin-bottom: 20px;
+                        }
+                    }*/
+@media screen and (max-width: 600px) {
+    .card {
+        padding-right: 20px !important;
+        padding-top: 20px !important;
+
+    }
+}
+
+/* Style the counter cards */
+.card {
+    padding-right: 16px;
+    padding-top: 16px;
+    text-align: center;
+}

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Stazione Meteo Permanente del Liceo Scientifico Statale "Leonardo Cocito"</title>
+    <meta charset="UTF-8">
+    <!-- Primary Meta Tags -->
+    <title>Stazione Meteo Permanente del Liceo Scientifico Statale "Leonardo Cocito"</title>
+    <meta name="title" content="Stazione Meteo Permanente del Liceo Scientifico Statale Leonardo Cocito">
+    <meta name="description" content="Questa pagina contiene dati, grafici e statistiche raccolte dalla Stazione Meteo Permanente del Liceo Scientifico Statale 
+        Leonardo Cocito">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://liceococito.edu.it/meteo/">
+    <meta property="og:title" content="Stazione Meteo Permanente del Liceo Scientifico Statale Leonardo Cocito">
+    <meta property="og:description" content="Questa pagina contiene dati, grafici e statistiche raccolte dalla Stazione Meteo Permanente del Liceo Scientifico Statale 
+        Leonardo Cocito">
+    <meta property="og:image" content="https://liceococito.edu.it/meteo/logoLiceo.gif">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://liceococito.edu.it/meteo/">
+    <meta property="twitter:title" content="Stazione Meteo Permanente del Liceo Scientifico Statale Leonardo Cocito">
+    <meta property="twitter:description" content="Questa pagina contiene dati, grafici e statistiche raccolte dalla Stazione Meteo Permanente del Liceo Scientifico Statale
+        Leonardo Cocito">
+    <meta property="twitter:image" content="https://liceococito.edu.it/meteo/logoLiceo.gif">
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org/",
+    "@type": "WebSite",
+    "name": "Stazione Meteo Permanente del Liceo Scientifico Statale Leonardo Cocito",
+    "url": "https://www.liceococito.edu.it/meteo/"
+    }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<body class="w3-theme-l4">
+
+    <div style="min-width:400px">
+
+        <div class="w3-bar w3-large w3-theme-d4">
+
+            <span class="w3-bar-item">
+                <h1>Stazione Meteo Permanente del Liceo Scientifico Statale "Leonardo Cocito"</h1>
+                <hr />
+
+                <div id="cdivS" style="width: 100%; height: 200px;">
+                    <div class="row">
+
+                        <div class="column">
+                            <div id="GT" class="card"></div>
+                        </div>
+
+                        <div class="column">
+                            <div id="GH" class="card"></div>
+                        </div>
+
+                        <div class="column">
+                            <div id="GP" class="card"></div>
+                        </div>
+                        <div class="column">
+                        </div>
+
+                        <div class="column">
+                            <div id="GPM10" class="card"></div>
+                        </div>
+
+                        <div class="column">
+                            <div id="GPM25" class="card"></div>
+                        </div>
+
+                        <div class="column">
+                            <div id="GS" class="card"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="column" style="width:80vw">
+                            <p><b>Ultimo Aggiornamento: <span id="lastU"></span>
+                                </b></p>
+                        </div>
+                    </div>
+                </div>
+            </span>
+
+            <div class="w3-bar w3-black">
+                <a href="#plot" id="graphics" class="mainB w3-bar-item w3-button w3-mobile"
+                    data-dropdown="yes">Grafici</a>
+                <a href="#plot" id="datas" class="mainB w3-bar-item w3-button w3-mobile" data-dropdown="yes">Dati</a>
+                <a href="https://github.com/MatMasIt/weatherStation/raw/main/documents/ws.pdf"
+                    class="mainB w3-bar-item w3-button w3-mobile" target="_blank">Informazioni sul progetto</a>
+                <a href="https://github.com/StazioneMeteoCocito/dati"
+                    class="mainB w3-bar-item w3-button w3-mobile">Archivio</a>
+                <a href="https://github.com/MatMasIt/weatherStation" class="mainB w3-bar-item w3-button w3-mobile">Open
+                    Source</a>
+
+                <a id="activity" class="mainB w3-bar-item w3-button w3-mobile">Attività</a>
+
+            </div>
+            <div class="w3-bar" id="datatype">
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-red dt" data-type="T">Temperatura</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-blue dt" data-type="H">Umidità</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-green dt" data-type="P">Pressione</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-cyan dt" data-type="PM10">PM10</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-magenta dt" data-type="PM25">PM2.5</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile w3-orange dt" data-type="S">Fumo e vapori
+                    infiammabili</a>
+            </div>
+            <div class="w3-bar w3-black" id="when">
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="today">Oggi</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="yesterday">Ieri</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="weekly">Questa settimana</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="weeklyprev">Settimana
+                    precedente</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="thismonth">Questo mese</a>
+                <a href="#plot" class="w3-bar-item w3-button w3-mobile td" data-when="prevmonth">Lo scorso mese</a>
+            </div>
+
+        </div>
+        <div class="progress-line"></div>
+        <div class="w3-container w3-content" id="landing">
+            <div class="w3-panel w3-white w3-card w3-display-container">
+                <p>Il progetto "Stazione meteo" raccoglie dati dalla stazione Meteo Permanente del Liceo Scientifico
+                    Leonardo Cocito</p>
+            </div>
+        </div>
+
+
+
+        <div class="w3-container w3-content">
+            <div id="actTab">
+                <div id="calendar_basic" style="width: 1000px;height: 350px;"></div>
+            </div>
+            <div id="plottingArea">
+                <p class="w3-opacity"><b id="plottingTitle"></b></p>
+                <div class="w3-panel w3-white w3-card w3-display-container">
+                    <div id="noContent">
+                        <center>
+                            <h2>Nessun Contenuto</h2>
+                        </center>
+                    </div>
+
+                    <div id="plot"></div>
+
+                    <div class="w3-card-4" id="dTable">
+
+                    </div>
+                    <table class="w3-table-all w3-card-4">
+                        <tr>
+                            <th>Media</th>
+                            <th>Minimo</th>
+                            <th>Massimo</th>
+                            <th>Deviazione Standard</th>
+                            <th>Moda</th>
+                            <th>Numero rilevazioni</th>
+                        </tr>
+                        <tr>
+                            <td id="avg"></td>
+                            <td id="min"></td>
+                            <td id="max"></td>
+                            <td id="stdev"></td>
+                            <td id="mode"></td>
+                            <td id="setSize"></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+            </div>
+
+        </div>
+        <script src="assets/gauges.js"></script>
+        <script src="assets/tabUi.js"></script>
+        <script src="assets/tableGraphs.js"></script>
+</body>
+
+</html>

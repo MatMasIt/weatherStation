@@ -1,5 +1,13 @@
 <?php
-
+if (!count(glob("data/2*"))) {
+    http_response_code(500);
+    header("Content-Type: text/html");
+?>
+    <h1>Update in progress</h1>
+    <p>Data cannot be displayed right now</h1>
+    <?php
+    exit;
+}
 if (!function_exists('stats_standard_deviation')) {
     /**
      * This user-land implementation follows the implementation quite strictly;
@@ -129,14 +137,14 @@ function get_stats($data)
     }
     $finalIntegerMode = -1000000000;
     $imodeCount = -1;
-    foreach($modeMap as $value=>$occurrence){
-        if($occurrence>$imodeCount){
-            $finalIntegerMode=$value;
-            $imodeCount=$occurrence;
+    foreach ($modeMap as $value => $occurrence) {
+        if ($occurrence > $imodeCount) {
+            $finalIntegerMode = $value;
+            $imodeCount = $occurrence;
         }
     }
     if ($avgNum == 0) return ["avg" => 0, "max" => 0, "min" => 0, "stdev" => 0, "setSize" => 0];
-    return ["avg" => $avgTot / $avgNum, "max" => $max, "min" => $min, "stdev" => stats_standard_deviation($allData), "setSize" => $avgNum, "mode"=>$finalIntegerMode];
+    return ["avg" => $avgTot / $avgNum, "max" => $max, "min" => $min, "stdev" => stats_standard_deviation($allData), "setSize" => $avgNum, "mode" => $finalIntegerMode];
 }
 $final = [];
 switch ($_GET["when"]) {
