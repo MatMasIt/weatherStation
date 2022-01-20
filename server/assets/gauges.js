@@ -120,26 +120,50 @@ function cdivS() {
 
     setInterval(function () {
         dataT.setValue(0, 1, dq["T"]);
+        let formatter = new google.visualization.NumberFormat(
+            {suffix: '°C',pattern:'#'}
+        );
+        formatter.format(dataT,1);
         tch.draw(dataT, optionsT);
     }, 5000);
     setInterval(function () {
-        dataH.setValue(0, 1, dq["H"])
+        dataH.setValue(0, 1, dq["H"]);
+        let formatter = new google.visualization.NumberFormat(
+            {suffix: '%',pattern:'#'}
+        );
+        formatter.format(dataH,1);
         hch.draw(dataH, optionsH);
     }, 5000);
     setInterval(function () {
-        dataP.setValue(0, 1, dq["P"])
+        dataP.setValue(0, 1, dq["P"]);
+        let formatter = new google.visualization.NumberFormat(
+            {suffix: 'hPa',pattern:'#'}
+        );
+        formatter.format(dataP,1);
         pch.draw(dataP, optionsP);
     }, 5000);
     setInterval(function () {
-        dataPM10.setValue(0, 1, dq["PM10"])
+        dataPM10.setValue(0, 1, dq["PM10"]);
+        let formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataPM10,1);
         pm10ch.draw(dataPM10, optionsPM10);
     }, 5000);
     setInterval(function () {
-        dataPM25.setValue(0, 1, dq["PM25"])
+        dataPM25.setValue(0, 1, dq["PM25"]);
+         let formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataPM25,1);
         pm25ch.draw(dataPM25, optionsPM25);
     }, 5000);
     setInterval(function () {
-        dataS.setValue(0, 1, dq["S"])
+        dataS.setValue(0, 1, dq["S"]);
+         let formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataS,1);
         pmSch.draw(dataS, optionsS);
     }, 5000);
 
@@ -147,16 +171,40 @@ function cdivS() {
         dq = JSON.parse(data);
         $("#lastU").html(dq["update"]);
         dataT.setValue(0, 1, dq["T"]);
+        let formatter = new google.visualization.NumberFormat(
+            {suffix: '°C',pattern:'#'}
+        );
+        formatter.format(dataT,1);
         tch.draw(dataT, optionsT);
-        dataH.setValue(0, 1, dq["H"])
+        dataH.setValue(0, 1, dq["H"]);
+        formatter = new google.visualization.NumberFormat(
+            {suffix: '%',pattern:'#'}
+        );
+        formatter.format(dataH,1);
         hch.draw(dataH, optionsH);
-        dataP.setValue(0, 1, dq["P"])
+        dataP.setValue(0, 1, dq["P"]);
+        formatter = new google.visualization.NumberFormat(
+            {suffix: 'hPa',pattern:'#'}
+        );
+        formatter.format(dataP,1);
         pch.draw(dataP, optionsP);
-        dataPM10.setValue(0, 1, dq["PM10"])
+        dataPM10.setValue(0, 1, dq["PM10"]);
+        formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataPM10,1);
         pm10ch.draw(dataPM10, optionsPM10);
-        dataPM25.setValue(0, 1, dq["PM25"])
+        dataPM25.setValue(0, 1, dq["PM25"]);
+        formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataPM25,1);
         pm25ch.draw(dataPM25, optionsPM25);
         dataS.setValue(0, 1, dq["S"])
+        formatter = new google.visualization.NumberFormat(
+            {suffix: 'µg/m³',pattern:'#'}
+        );
+        formatter.format(dataS,1);
         pmSch.draw(dataS, optionsS);
 
     });
